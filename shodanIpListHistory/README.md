@@ -8,4 +8,7 @@ How to use this subproject:
 
   -apikey apikeyDoShodan 
   -file  list o ips
-OBS: i usei shodan api key with history ip information.
+  
+   go run main.go -apikey rá -file  ok
+OBS: i used shodan api key with history ip information.
+
