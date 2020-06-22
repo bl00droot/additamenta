@@ -23,25 +23,24 @@ var (
 	exit    = os.Exit 
 	filePtr = flag.String("file", "", "ip list - obrigatorio")
 	apikey  = flag.String("apikey", "", "apikey: YourApiKey - obrigatorio")
+	ipsStr []string
 )
 
 
 
 func readFile() {
-
 	ipFile, err := os.Open(*filePtr)
 	if err != nil {
-		log.Fatal("Erro na leitura", err)	
-	}
+		log.Fatal("Erro na leitura", err)
+		}
 	defer ipFile.Close()
 	scanner := bufio.NewScanner(ipFile)
 	scanner.Split(bufio.ScanLines)
 	for scanner.Scan() {
-		ipStr = append(ipsStr, scanner.Text())
-	} 
+	  ipsStr = append(ipsStr, scanner.Text())
+	}
+	
 }
-
-
 
 func checkConn(ip string, portas string){
 	address := net.JoinHostPort(ip, portas)
@@ -61,36 +60,21 @@ func main() {
 
 	flag.Parse()
 
-	var ipsStr []string
 	client := &http.Client{}
 
 	if *filePtr == "" {
 		flag.Usage()
 		exit(1)
 	}
-/***
-    if *filePtr != "" {
-		ipFile, err := os.Open(*filePtr)
-		if err != nil {
-			log.Fatal("Erro na leitura", err)
-		}
-		defer ipFile.Close()
-		scanner := bufio.NewScanner(ipFile)
-		scanner.Split(bufio.ScanLines)
-		for scanner.Scan() {
-		  ipsStr = append(ipsStr, scanner.Text())
-		}
-	  }
-***/
-	
+
 
 	if *apikey == "" {
-		flag.Usage()
-		exit(1)
+	flag.Usage()
+	exit(1)
 	}
+	
 
 	readFile()
-	
 	for i := range ipsStr {
 		ipsEnt :=  ipsStr[i]
 
